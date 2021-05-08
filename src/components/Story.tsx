@@ -1,4 +1,6 @@
-export const Story = () => {
+import { NextPage } from "next";
+
+export const Story: NextPage = () => {
   return (
     <div className="stories bg-white p-5 rounded border border-gray-400 flex mb-6">
       <div className="storie-item flex flex-col mr-6">

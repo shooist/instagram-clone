@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
-import { useUser } from "../src/contexts/AuthContexts";
-import { AuthContext } from "../src/contexts/AuthContexts";
+import { NextPage } from "next";
+import { AuthContext } from "../contexts/AuthContext";
 
-export const Sidebar = () => {
+export const Sidebar: NextPage = () => {
   const { currentUser } = useContext(AuthContext);
   let hoge = "未ログイン";
   if (currentUser) {

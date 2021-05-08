@@ -1,4 +1,6 @@
-export const Feed = () => {
+import { NextPage } from "next";
+
+export const Feed: NextPage = () => {
   return (
     <div className="feeds">
       <div className="feed-wrapper mb-4">
@@ -138,7 +140,7 @@ export const Feed = () => {
               <div className="wrapper flex">
                 <input
                   type="text"
-                  className="text-sm h-10 w-full outline-none focus:outline-none w-10/12"
+                  className="text-sm h-10 w-full outline-none focus:outline-none"
                   placeholder="コメントを送信..."
                 />
                 <button className="text-blue-500 opacity-75 w-2/12 text-right font-bold">

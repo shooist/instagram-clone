@@ -1,42 +1,16 @@
 import Image from "next/image";
-import { useRouter } from "next/router";
-import { useState } from "react";
-import { signupUserWithEmailAndPassword } from "../src/firebase/auth";
+import { useState, useContext } from "react";
+import { AuthContext } from "src/contexts/AuthContext";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [userName, setUserName] = useState("");
-  const router = useRouter();
+  const { signup } = useContext(AuthContext);
 
-  /**
-   *
-   * @param {Event} event
-   */
-  const signup = async (event) => {
-    try {
-      event.preventDefault();
-      console.log("email : ", email);
-      console.log("password : ", password);
-      console.log("userName : ", userName);
-      const result = await signupUserWithEmailAndPassword(email, password);
-      if (result) {
-        // create Success
-        console.log("hoge");
-        // var user = firebase.auth().currentUser;
-        result.user.updateProfile({
-          displayName: userName,
-          // photoURL: "https://example.com/jane-q-user/profile.jpg",
-        });
-        console.log(result);
-        // RedirectTo("/");
-        router.push("/");
-      } else {
-        // create Failed
-      }
-    } catch (error) {
-      alert(error);
-    }
+  const handleSignup = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const result = await signup(email, password, history);
   };
 
   return (
@@ -46,7 +20,7 @@ const Signup = () => {
           <Image src="/logo.svg" alt="logo" width={200} height={80}></Image>
           <hr />
           <div className="p-10">
-            <form onSubmit={signup}>
+            <form onSubmit={handleSignup}>
               <input
                 type="text"
                 value={email}

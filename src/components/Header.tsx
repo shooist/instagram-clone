@@ -1,8 +1,9 @@
+import { NextPage } from "next";
 import Link from "next/link";
-import { useState, useContext } from "react";
-import { AuthContext } from "../src/contexts/AuthContexts";
+import { useContext } from "react";
+import { AuthContext } from "../contexts/AuthContext";
 
-export const Header = () => {
+export const Header: NextPage = () => {
   const { signout } = useContext(AuthContext);
 
   const handleSignout = async () => {

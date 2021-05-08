@@ -1,14 +1,15 @@
+import { NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useContext } from "react";
-import { AuthContext } from "../src/contexts/AuthContexts";
+import React, { useState, useContext } from "react";
+import { AuthContext } from "src/contexts/AuthContext";
 
-const Signin = ({ history }) => {
+const Signin: NextPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { signin } = useContext(AuthContext);
 
-  const handleSignin = async (event) => {
+  const handleSignin = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     signin(email, password, history);
   };

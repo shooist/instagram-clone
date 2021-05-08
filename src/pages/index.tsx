@@ -1,11 +1,10 @@
-import Head from "next/head";
-import Image from "next/image";
-import { Feed } from "../components/Feed";
-import { Header } from "../components/Header";
-import { Sidebar } from "../components/Sidebar";
-import { Story } from "../components/Story";
+import { NextPage } from "next";
+import { Feed } from "src/components/Feed";
+import { Header } from "src/components/Header";
+import { Sidebar } from "src/components/Sidebar";
+import { Story } from "src/components/Story";
 
-const Home = () => {
+const Index: NextPage = () => {
   return (
     <div className="relative bg-gray-200 h-full">
       <Header />
@@ -22,4 +21,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Index;
