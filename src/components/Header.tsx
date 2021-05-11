@@ -25,13 +25,13 @@ export const Header: NextPage = () => {
             </a>
           </Link>
         </div>
-        <div className="search-bar">
+        {/* <div className="search-bar">
           <input
             type="text"
             placeholder="検索"
             className="border px-1 text-sm bg-gray-200 rounded-sm"
           />
-        </div>
+        </div> */}
         <div className="icons flex">
           <div className="home-icon mr-6">
             <svg
