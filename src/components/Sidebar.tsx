@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { NextPage } from "next";
-import { AuthContext } from "../contexts/AuthContext";
+import { AuthContext } from "src/contexts/AuthContext";
 
 export const Sidebar: NextPage = () => {
   const { currentUser } = useContext(AuthContext);

@@ -1,13 +1,14 @@
 import type { ReactNode, VFC } from "react";
 import { createContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import firebase, { auth } from "src/firebase/auth";
+import firebase, { auth } from "src/firebase/init";
+import type { User } from "@firebase/auth-types";
 
 type Context = {
   signup: any;
   signin: any;
   signout: any;
-  currentUser: firebase.User | null;
+  currentUser: User | null;
 };
 
 export const AuthContext = createContext<Context>({

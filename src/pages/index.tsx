@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import { Feed } from "src/components/Feed";
+import { Feeds } from "src/components/Feeds";
 import { Header } from "src/components/Header";
 import { Sidebar } from "src/components/Sidebar";
 import { Story } from "src/components/Story";
@@ -12,7 +12,7 @@ const Index: NextPage = () => {
         <div className="container mx-auto flex h-full">
           <div className="left w-8/12 pr-4">
             <Story />
-            <Feed />
+            <Feeds />
           </div>
           <Sidebar />
         </div>
