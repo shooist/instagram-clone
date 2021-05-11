@@ -58,8 +58,12 @@ export const FeedItem: VFC<FeedItemProp> = (props) => {
             </svg>
           </div>
         </div>
-        <div className="feed-body">
-          <img src={props.item.imageUrl} alt="" className="w-full" />
+        <div className="feed-body aspect-w-1 aspect-h-1">
+          <img
+            src={props.item.imageUrl}
+            alt=""
+            className="w-full object-contain"
+          />
         </div>
         <div className="feed-footer p-4">
           <div className="top">
