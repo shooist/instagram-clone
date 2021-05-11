@@ -4,7 +4,7 @@ import { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 
 export const Header: NextPage = () => {
-  const { signout } = useContext(AuthContext);
+  const { currentUser, signout } = useContext(AuthContext);
 
   const handleSignout = async () => {
     signout();
@@ -25,13 +25,13 @@ export const Header: NextPage = () => {
             </a>
           </Link>
         </div>
-        <div className="search-bar">
+        {/* <div className="search-bar">
           <input
             type="text"
             placeholder="検索"
             className="border px-1 text-sm bg-gray-200 rounded-sm"
           />
-        </div>
+        </div> */}
         <div className="icons flex">
           <div className="home-icon mr-6">
             <svg
@@ -85,18 +85,47 @@ export const Header: NextPage = () => {
               <path d="M34.6 6.1c5.7 0 10.4 5.2 10.4 11.5 0 6.8-5.9 11-11.5 16S25 41.3 24 41.9c-1.1-.7-4.7-4-9.5-8.3-5.7-5-11.5-9.2-11.5-16C3 11.3 7.7 6.1 13.4 6.1c4.2 0 6.5 2 8.1 4.3 1.9 2.6 2.2 3.9 2.5 3.9.3 0 .6-1.3 2.5-3.9 1.6-2.3 3.9-4.3 8.1-4.3m0-3c-4.5 0-7.9 1.8-10.6 5.6-2.7-3.7-6.1-5.5-10.6-5.5C6 3.1 0 9.6 0 17.6c0 7.3 5.4 12 10.6 16.5.6.5 1.3 1.1 1.9 1.7l2.3 2c4.4 3.9 6.6 5.9 7.6 6.5.5.3 1.1.5 1.6.5.6 0 1.1-.2 1.6-.5 1-.6 2.8-2.2 7.8-6.8l2-1.8c.7-.6 1.3-1.2 2-1.7C42.7 29.6 48 25 48 17.6c0-8-6-14.5-13.4-14.5z"></path>
             </svg>
           </div>
-          <div className="profile-icon">
-            <img
-              alt="u__graphics's profile picture"
-              width="22px"
-              height="22px"
-              className="_6q-tv"
-              data-testid="user-avatar"
-              draggable="false"
-              src="profileIcon.png"
-            />
-          </div>
-          <button onClick={handleSignout}>ログアウト</button>
+          {currentUser ? (
+            <div className="hover-trigger relative">
+              <div className="profile-icon h-6 w-6 border rounded-full overflow-hidden cursor-pointer">
+                <img
+                  alt="u__graphics's profile picture"
+                  className="_6q-tv"
+                  data-testid="user-avatar"
+                  draggable="false"
+                  src="profileIcon.png"
+                />
+              </div>
+              <div className="hover-target absolute bg-white border border-gray-100 w-36 transform -translate-x-1/2">
+                <ul className="">
+                  <li className=" hover:bg-gray-200">
+                    <Link href="/post">
+                      <a className="px-6 py-3 block">投稿する</a>
+                    </Link>
+                  </li>
+                  <li className=" hover:bg-gray-200">
+                    <button onClick={handleSignout} className="px-6 py-3">
+                      ログアウト
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          ) : (
+            <Link href="/signin">
+              <a>
+                <div className="profile-icon h-6 w-6 border rounded-full overflow-hidden">
+                  <img
+                    alt="u__graphics's profile picture"
+                    className="_6q-tv"
+                    data-testid="user-avatar"
+                    draggable="false"
+                    src="profileIcon.png"
+                  />
+                </div>
+              </a>
+            </Link>
+          )}
         </div>
       </div>
     </nav>

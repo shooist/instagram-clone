@@ -11,10 +11,10 @@ const Index: NextPage = () => {
       <div className="page-content pt-6 h-full">
         <div className="container mx-auto flex h-full">
           <div className="left w-8/12 pr-4">
-            <Story />
+            {/* <Story /> */}
             <Feeds />
           </div>
-          <Sidebar />
+          {/* <Sidebar /> */}
         </div>
       </div>
     </div>
