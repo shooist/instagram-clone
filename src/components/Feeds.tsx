@@ -1,5 +1,6 @@
 import type { VFC } from "react";
 import { FeedItem } from "src/components/FeedItem";
+import { FeedItemSkeleton } from "src/components/FeedItemSkeleton";
 import { FeedItemType } from "src/types/types";
 import useSWR from "swr";
 import fetch from "isomorphic-unfetch";
@@ -17,8 +18,7 @@ export const Feeds: VFC = () => {
   }
 
   if (!data) {
-    // TODO: 検索結果取得時のローディング処理
-    return <div>loading…</div>;
+    return <FeedItemSkeleton />;
   }
 
   const items = data["messages"];
