@@ -17,7 +17,12 @@ const Signup = () => {
     <div className="relative bg-gray-200 h-screen flex justify-center items-center flex-col">
       <div className="signin w-3/12 bg-white border border-gray-400 text-center">
         <div className="p-5">
-          <Image src="/logo.svg" alt="logo" width={200} height={80}></Image>
+          <Image
+            src="/assets/img/logo.svg"
+            alt="logo"
+            width={200}
+            height={80}
+          ></Image>
           <hr />
           <div className="p-10">
             <form onSubmit={handleSignup}>
