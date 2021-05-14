@@ -5,6 +5,7 @@ import { updateImage } from "src/firebase/image";
 import firebase, { db } from "src/firebase/init";
 import { AuthContext } from "src/contexts/AuthContext";
 import { getRandomString } from "src/util/randomString";
+import { useRequireLogin } from "src/hook/useRequireLogin";
 
 const Post = () => {
   const { currentUser } = useContext(AuthContext);
@@ -12,6 +13,8 @@ const Post = () => {
   const [previewUrl, setPreviewUrl] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [fileName, setFileName] = useState("");
+
+  useRequireLogin();
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();

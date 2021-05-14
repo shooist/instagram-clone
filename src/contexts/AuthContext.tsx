@@ -9,6 +9,7 @@ type Context = {
   signin: any;
   signout: any;
   currentUser: User | null;
+  isAuthChecked: boolean;
 };
 
 export const AuthContext = createContext<Context>({
@@ -16,10 +17,12 @@ export const AuthContext = createContext<Context>({
   signin: null,
   signout: null,
   currentUser: null,
+  isAuthChecked: false,
 });
 
 export const AuthContextProvider: VFC<{ children: ReactNode }> = (props) => {
   const [currentUser, setCurrentUser] = useState<firebase.User | null>(null);
+  const [isAuthChecked, setIsAuthChecked] = useState<boolean>(false);
   const router = useRouter();
 
   const signin = async (email: string, password: string, history: any) => {
@@ -52,8 +55,9 @@ export const AuthContextProvider: VFC<{ children: ReactNode }> = (props) => {
   };
 
   useEffect(() => {
-    auth.onAuthStateChanged((currentUser) => {
-      setCurrentUser(currentUser);
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setCurrentUser(user);
+      setIsAuthChecked(true);
     });
   }, []);
 
@@ -62,6 +66,7 @@ export const AuthContextProvider: VFC<{ children: ReactNode }> = (props) => {
     signup: signup,
     signout: signout,
     currentUser: currentUser,
+    isAuthChecked: isAuthChecked,
   };
 
   return <AuthContext.Provider value={value} {...props} />;
