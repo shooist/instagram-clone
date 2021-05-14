@@ -57,8 +57,8 @@ const Post = () => {
 
   return (
     <div className="relative bg-gray-200 h-screen flex justify-center items-center flex-col">
-      <div className="signin w-3/12 bg-white border border-gray-400 text-center">
-        <div className="p-5">
+      <div className="signin container max-w-sm bg-white border border-gray-400 text-center">
+        <div className="p-4 md:p-8">
           <Image
             src="/assets/img/logo.svg"
             alt="logo"
@@ -66,14 +66,8 @@ const Post = () => {
             height={80}
           ></Image>
           <hr />
-          <div className="p-10">
+          <div className="pt-10">
             <form onSubmit={handlePost}>
-              <textarea
-                value={caption}
-                onChange={(event) => setCaption(event.target.value)}
-                className="border border-gray-200 w-full py-2 px-3 mb-3"
-                placeholder="キャプション"
-              />
               <div>
                 {previewUrl ? (
                   <img alt="preview-image" src={previewUrl} />
@@ -84,9 +78,16 @@ const Post = () => {
                 accept="image/*"
                 onChange={handleImageChange}
                 id="icon"
+                className="w-full mb-4"
+              />
+              <textarea
+                value={caption}
+                onChange={(event) => setCaption(event.target.value)}
+                className="border border-gray-200 w-full px-3 py-2 mb-3"
+                placeholder="キャプション"
               />
               <button
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold w-full px-4 py-2 mt-4 rounded focus:outline-none focus:shadow-outline"
                 type="submit"
               >
                 投稿
