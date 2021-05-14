@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { useState, useContext } from "react";
 import * as validate from "src/util/validate";
 import { updateImage } from "src/firebase/image";
@@ -62,12 +63,17 @@ const Post = () => {
     <div className="relative bg-gray-200 h-screen flex justify-center items-center flex-col">
       <div className="signin container max-w-sm bg-white border border-gray-400 text-center">
         <div className="p-4 md:p-8">
-          <Image
-            src="/assets/img/logo.svg"
-            alt="logo"
-            width={200}
-            height={80}
-          ></Image>
+          <Link href="/">
+            <a>
+              <Image
+                src="/assets/img/logo.svg"
+                alt="logo"
+                width={200}
+                height={80}
+              ></Image>
+            </a>
+          </Link>
+
           <hr />
           <div className="pt-10">
             <form onSubmit={handlePost}>
