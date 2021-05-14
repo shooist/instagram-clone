@@ -14,7 +14,7 @@ export const FeedItem: VFC<FeedItemProp> = (props) => {
 
   return (
     <div className="feed-wrapper mb-4">
-      <div className="feed-item border border-gray-400 rounded bg-white">
+      <div className="feed-item bg-white">
         <div className="feed-header border-b p-4 flex justify-between items-center">
           <div className="left flex flex-row items-center">
             <div className="user-img h-10 w-10 border rounded-full overflow-hidden mr-4">
@@ -92,7 +92,7 @@ export const FeedItem: VFC<FeedItemProp> = (props) => {
                 placeholder="コメントを送信..."
               />
               <button
-                className="text-blue-500 opacity-75 w-2/12 text-right font-bold cursor-pointer"
+                className="text-blue-500 text-center opacity-75 w-4/12 md:w-2/12 font-bold cursor-pointer"
                 onClick={alertNotImplemented}
               >
                 投稿する

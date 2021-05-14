@@ -17,7 +17,7 @@ export const Header: NextPage = () => {
 
   return (
     <nav className="border-b py-3 sticky top-0 bg-white z-50">
-      <div className="container mx-auto flex justify-between">
+      <div className="container px-3 mx-auto flex justify-between">
         <div className="logo">
           <Link href="/">
             <a>
@@ -35,13 +35,13 @@ export const Header: NextPage = () => {
           />
         </div> */}
         <div className="icons flex items-center">
-          <Link href="/">
+          {/* <Link href="/">
             <a>
               <div className="home-icon mr-6">
                 <img src="/assets/img/iconHome.svg" alt="home" />
               </div>
             </a>
-          </Link>
+          </Link> */}
           <div
             className="dm-icon mr-6 cursor-pointer"
             onClick={alertNotImplemented}
@@ -71,7 +71,7 @@ export const Header: NextPage = () => {
                   src="/assets/img/profileIcon.png"
                 />
               </div>
-              <div className="hover-target absolute bg-white border border-gray-100 w-36 transform -translate-x-1/2">
+              <div className="hover-target absolute bg-white border border-gray-100 w-36 transform -right-2">
                 <ul className="">
                   <li className=" hover:bg-gray-200">
                     <Link href="/post">
