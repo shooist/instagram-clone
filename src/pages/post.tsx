@@ -73,7 +73,12 @@ const Post = () => {
             <form onSubmit={handlePost}>
               <div>
                 {previewUrl ? (
-                  <img alt="preview-image" src={previewUrl} />
+                  <Image
+                    alt="preview-image"
+                    src={previewUrl}
+                    width={480}
+                    height={480}
+                  />
                 ) : null}
               </div>
               <input

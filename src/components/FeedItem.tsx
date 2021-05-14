@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { VFC } from "react";
 import { useContext } from "react";
 import { MessageContext } from "src/contexts/MessageContext";
@@ -18,10 +19,12 @@ export const FeedItem: VFC<FeedItemProp> = (props) => {
         <div className="feed-header border-b p-4 flex justify-between items-center">
           <div className="left flex flex-row items-center">
             <div className="user-img h-10 w-10 border rounded-full overflow-hidden mr-4">
-              <img
+              <Image
                 src="/assets/img/profileIcon.png"
                 alt="user-avatar"
                 draggable="false"
+                width={38}
+                height={38}
               />
             </div>
             <div className="user-name-and-place flex flex-col">
@@ -32,42 +35,69 @@ export const FeedItem: VFC<FeedItemProp> = (props) => {
             </div>
           </div>
           <div className="right cursor-pointer" onClick={alertNotImplemented}>
-            <img src="/assets/img/iconMore.svg" alt="more" />
+            <Image
+              src="/assets/img/iconMore.svg"
+              alt="more"
+              width={24}
+              height={24}
+            />
           </div>
         </div>
-        <div className="feed-body aspect-w-1 aspect-h-1">
-          <img
+        <div className="feed-body">
+          <Image
             src={props.item.imageUrl}
             alt=""
             className="w-full object-contain"
+            width={1280}
+            height={1280}
           />
         </div>
         <div className="feed-footer p-4">
           <div className="top">
             <div className="icons flex flex-row justify-between items-center">
-              <div className="left flex flex-row">
+              <div className="left flex flex-row items-center">
                 <div
-                  className="like mr-4 cursor-pointer"
+                  className="like mr-4 cursor-pointer inline-flex"
                   onClick={alertNotImplemented}
                 >
-                  <img src="/assets/img/iconLike.svg" alt="like" />
+                  <Image
+                    src="/assets/img/iconLike.svg"
+                    alt="like"
+                    width={24}
+                    height={24}
+                  />
                 </div>
                 <div
-                  className="comment mr-4 cursor-pointer"
+                  className="comment mr-4 cursor-pointer inline-flex"
                   onClick={alertNotImplemented}
                 >
-                  <img src="/assets/img/iconComment.svg" alt="comment" />
+                  <Image
+                    src="/assets/img/iconComment.svg"
+                    alt="comment"
+                    width={24}
+                    height={24}
+                  />
                 </div>
                 <div
-                  className="share cursor-pointer"
+                  className="share cursor-pointer inline-flex"
                   onClick={alertNotImplemented}
                 >
-                  <img src="/assets/img/iconDM.svg" alt="share" />
+                  <Image
+                    src="/assets/img/iconDM.svg"
+                    alt="share"
+                    width={24}
+                    height={24}
+                  />
                 </div>
               </div>
-              <div className="right cursor-pointer">
-                <div className="save" onClick={alertNotImplemented}>
-                  <img src="/assets/img/iconSave.svg" alt="save" />
+              <div className="right flex items-center cursor-pointer">
+                <div className="save inline-flex" onClick={alertNotImplemented}>
+                  <Image
+                    src="/assets/img/iconSave.svg"
+                    alt="save"
+                    width={24}
+                    height={24}
+                  />
                 </div>
               </div>
             </div>

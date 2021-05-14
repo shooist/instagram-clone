@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useContext } from "react";
 import { MessageContext } from "src/contexts/MessageContext";
 import { AuthContext } from "src/contexts/AuthContext";
+import Image from "next/image";
 
 export const Header: NextPage = () => {
   const { currentUser, signout } = useContext(AuthContext);
@@ -21,8 +22,14 @@ export const Header: NextPage = () => {
         <div className="logo">
           <Link href="/">
             <a>
-              <h1 className="font-bold text-xl w-32">
-                <img src="/assets/img/logo.svg" alt="instagram logo" />
+              <h1 className="flex items-center font-bold text-xl w-32">
+                <Image
+                  src="/assets/img/logo.svg"
+                  alt="instagram logo"
+                  className="inline-flex"
+                  width={128}
+                  height={46}
+                />
               </h1>
             </a>
           </Link>
@@ -36,39 +43,61 @@ export const Header: NextPage = () => {
         </div> */}
         <div className="icons flex items-center">
           {/* <Link href="/">
-            <a>
-              <div className="home-icon mr-6">
-                <img src="/assets/img/iconHome.svg" alt="home" />
+            <a className="inline-flex">
+              <div className="home-icon mr-6 cursor-pointer inline-flex">
+                <Image
+                  src="/assets/img/iconHome.svg"
+                  alt="home"
+                  width={24}
+                  height={24}
+                />
               </div>
             </a>
           </Link> */}
           <div
-            className="dm-icon mr-6 cursor-pointer"
+            className="dm-icon mr-6 cursor-pointer inline-flex"
             onClick={alertNotImplemented}
           >
-            <img src="/assets/img/iconDM.svg" alt="dm" />
+            <Image
+              src="/assets/img/iconDM.svg"
+              alt="dm"
+              width={24}
+              height={24}
+            />
           </div>
           <div
-            className="compas-icon mr-6 cursor-pointer"
+            className="compas-icon mr-6 cursor-pointer inline-flex"
             onClick={alertNotImplemented}
           >
-            <img src="/assets/img/iconCompas.svg" alt="compas" />
+            <Image
+              src="/assets/img/iconCompas.svg"
+              alt="compas"
+              width={24}
+              height={24}
+            />
           </div>
           <div
-            className="like-icon mr-6 cursor-pointer"
+            className="like-icon mr-6 cursor-pointer inline-flex"
             onClick={alertNotImplemented}
           >
-            <img src="/assets/img/iconLike.svg" alt="like" />
+            <Image
+              src="/assets/img/iconLike.svg"
+              alt="like"
+              width={24}
+              height={24}
+            />
           </div>
           {currentUser ? (
-            <div className="hover-trigger relative">
-              <div className="profile-icon h-6 w-6 border rounded-full overflow-hidden cursor-pointer">
-                <img
+            <div className="hover-trigger relative flex items-center">
+              <div className="profile-icon h-6 w-6 border rounded-full overflow-hidden cursor-pointer inline-flex">
+                <Image
                   alt="u__graphics's profile picture"
                   className="_6q-tv"
                   data-testid="user-avatar"
                   draggable="false"
                   src="/assets/img/profileIcon.png"
+                  width={24}
+                  height={24}
                 />
               </div>
               <div className="hover-target absolute bg-white border border-gray-100 w-36 transform -right-2">
@@ -88,14 +117,16 @@ export const Header: NextPage = () => {
             </div>
           ) : (
             <Link href="/signin">
-              <a>
-                <div className="profile-icon h-6 w-6 border rounded-full overflow-hidden">
-                  <img
+              <a className="inline-flex">
+                <div className="profile-icon h-6 w-6 border rounded-full overflow-hidden inline-flex">
+                  <Image
                     alt="u__graphics's profile picture"
                     className="_6q-tv"
                     data-testid="user-avatar"
                     draggable="false"
                     src="/assets/img/profileIcon.png"
+                    width={24}
+                    height={24}
                   />
                 </div>
               </a>
