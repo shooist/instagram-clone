@@ -100,7 +100,7 @@ export const Header: NextPage = () => {
                   height={24}
                 />
               </div>
-              <div className="hover-target absolute bg-white border border-gray-100 w-36 transform -right-2">
+              <div className="hover-target absolute bg-white border border-gray-100 w-36 transform translate-y-full bottom-0 -right-2 ">
                 <ul className="">
                   <li className=" hover:bg-gray-200">
                     <Link href="/post">
