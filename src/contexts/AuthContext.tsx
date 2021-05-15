@@ -3,6 +3,7 @@ import { createContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import firebase, { auth } from "src/firebase/init";
 import type { User } from "@firebase/auth-types";
+import { authMessageAsJP } from "src/firebase/authMessageAsJP";
 
 type Context = {
   signup: any;
@@ -25,13 +26,12 @@ export const AuthContextProvider: VFC<{ children: ReactNode }> = (props) => {
   const [isAuthChecked, setIsAuthChecked] = useState<boolean>(false);
   const router = useRouter();
 
-  const signin = async (email: string, password: string, history: any) => {
+  const signin = async (email: string, password: string) => {
     try {
       await auth.signInWithEmailAndPassword(email, password);
-      // history.push("/");
       router.push("/");
     } catch (error) {
-      alert(error);
+      throw { ...error, message: authMessageAsJP(error, "signin") };
     }
   };
 
