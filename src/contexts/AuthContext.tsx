@@ -35,13 +35,12 @@ export const AuthContextProvider: VFC<{ children: ReactNode }> = (props) => {
     }
   };
 
-  const signup = async (email: string, password: string, history: any) => {
+  const signup = async (email: string, password: string) => {
     try {
       await auth.createUserWithEmailAndPassword(email, password);
-      // history.push("/");
       router.push("/");
     } catch (error) {
-      alert(error);
+      throw { ...error, message: authMessageAsJP(error, "signup") };
     }
   };
 
