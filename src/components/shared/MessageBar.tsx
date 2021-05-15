@@ -10,10 +10,7 @@ export const MessageBar: FC = () => {
     <div
       className={cc([
         "fixed bottom-0 z-50 w-full bg-gray-800 px-5 py-2 transition transform duration-1000",
-        {
-          [""]: isVisible,
-          ["translate-y-full"]: !isVisible,
-        },
+        { "translate-y-full": !isVisible },
       ])}
     >
       <p className="text-white text-sm">{message}</p>
