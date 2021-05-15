@@ -1,5 +1,5 @@
-import { FC, useEffect } from "react";
-import { useContext, useState } from "react";
+import { FC } from "react";
+import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { Input } from "src/components/shared/form-items/Input";
 import { AuthContext } from "src/contexts/AuthContext";
