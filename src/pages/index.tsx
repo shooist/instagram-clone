@@ -9,8 +9,8 @@ const Index: NextPage = () => {
     <div className="relative bg-gray-200 h-full">
       <Header />
       <div className="page-content pt-6 h-full">
-        <div className="container mx-auto flex h-full">
-          <div className="left w-8/12 pr-4">
+        <div className="container mx-auto h-full xl:w-1/2 lg:w-2/3 md:w-full">
+          <div className="left">
             {/* <Story /> */}
             <Feeds />
           </div>
