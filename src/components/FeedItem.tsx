@@ -1,12 +1,11 @@
 import Image from "next/image";
-import type { VFC } from "react";
 import { useContext } from "react";
 import { MessageContext } from "src/contexts/MessageContext";
 import type { FeedItemType } from "src/types/types";
 
 type FeedItemProp = { item: FeedItemType };
 
-export const FeedItem: VFC<FeedItemProp> = (props) => {
+export const FeedItem: React.VFC<FeedItemProp> = (props) => {
   const { outputMessage } = useContext(MessageContext);
 
   const alertNotImplemented = () => {

@@ -7,6 +7,8 @@ import firebase, { db } from "src/firebase/init";
 import { AuthContext } from "src/contexts/AuthContext";
 import { getRandomString } from "src/util/randomString";
 import { useRequireLogin } from "src/hook/useRequireLogin";
+import { gql } from "@apollo/client";
+import client from "src/apollo/apollo-client";
 
 const Post = () => {
   const { currentUser } = useContext(AuthContext);
@@ -57,6 +59,19 @@ const Post = () => {
       imageUrl: imageUrl,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     });
+    const data = await client.mutate({
+        mutation: gql`
+          mutation {
+            createArticle(
+              author: "hoge",
+              caption: "foo",
+              imageUrl: "bar"
+            ) {
+              author
+            }
+          }
+        `,
+    })
   };
 
   return (
