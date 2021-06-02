@@ -1,0 +1,7 @@
+type Article @model {
+  id: ID!
+  uid: String
+  author: String
+  caption: String
+  imageUrl: String
+}
