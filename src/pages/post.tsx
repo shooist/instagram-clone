@@ -9,6 +9,9 @@ import { getRandomString } from "src/util/randomString";
 import { useRequireLogin } from "src/hook/useRequireLogin";
 import { gql } from "@apollo/client";
 import client from "src/apollo/apollo-client";
+import Amplify, { API, graphqlOperation, Storage } from "aws-amplify";
+import awsmobile from "src/aws-exports";
+import { createArticle } from "src/graphql/mutations";
 
 const Post = () => {
   const { currentUser } = useContext(AuthContext);
@@ -18,6 +21,8 @@ const Post = () => {
   const [fileName, setFileName] = useState("");
 
   useRequireLogin();
+
+  Amplify.configure(awsmobile);
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -33,6 +38,7 @@ const Post = () => {
     };
     reader.readAsDataURL(file);
   };
+  type StorageResult = { key: string };
   const handlePost = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
@@ -46,32 +52,27 @@ const Post = () => {
       return;
     }
 
-    // Storageに追加
-    let updateFileName = getRandomString(20);
-    updateFileName += "." + fileName.split(".").pop();
-    const imageUrl = await updateImage(updateFileName, file);
+    try {
+      // S3 Storageに追加
+      let updateFileName = getRandomString(20);
+      updateFileName += "." + fileName.split(".").pop();
+      const result = (await Storage.put(updateFileName, file)) as StorageResult;
+      const imageUrl = await Storage.get(result.key);
 
-    // DB(Firestore）に追加
-    await db.collection("articles").add({
-      uid: currentUser.uid,
-      author: currentUser.displayName,
-      caption: caption,
-      imageUrl: imageUrl,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-    });
-    const data = await client.mutate({
-        mutation: gql`
-          mutation {
-            createArticle(
-              author: "hoge",
-              caption: "foo",
-              imageUrl: "bar"
-            ) {
-              author
-            }
-          }
-        `,
-    })
+      // DynamoDBに追加
+      await API.graphql(
+        graphqlOperation(createArticle, {
+          input: {
+            // uid: currentUser.uid,
+            // author: currentUser.displayName,
+            caption: caption,
+            imageUrl: imageUrl,
+          },
+        })
+      );
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
