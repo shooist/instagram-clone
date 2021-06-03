@@ -1,4 +1,19 @@
 {
+  "hosting": {
+    "amplifyhosting": {
+      "service": "amplifyhosting",
+      "type": "cicd",
+      "lastPushTimeStamp": "2021-06-02T07:07:01.158Z"
+    }
+  },
+  "auth": {
+    "instagramclonebb7c8038": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  },
   "api": {
     "instagramclone": {
       "service": "AppSync",
@@ -13,16 +28,8 @@
       }
     }
   },
-  "auth": {
-    "instagramclone6df4c2ea": {
-      "service": "Cognito",
-      "providerPlugin": "awscloudformation",
-      "dependsOn": [],
-      "customAuth": false
-    }
-  },
   "storage": {
-    "s3cae3ad5c": {
+    "s3766e3a37": {
       "service": "S3",
       "providerPlugin": "awscloudformation"
     }

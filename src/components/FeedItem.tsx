@@ -1,9 +1,10 @@
 import Image from "next/image";
 import { useContext } from "react";
 import { MessageContext } from "src/contexts/MessageContext";
-import type { FeedItemType } from "src/types/types";
+import type { FeedItemType, Article } from "src/types/types";
+import { AmplifyS3Image } from "@aws-amplify/ui-react";
 
-type FeedItemProp = { item: FeedItemType };
+type FeedItemProp = { item: Article };
 
 export const FeedItem: React.VFC<FeedItemProp> = (props) => {
   const { outputMessage } = useContext(MessageContext);

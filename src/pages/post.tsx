@@ -2,15 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useContext } from "react";
 import * as validate from "src/util/validate";
-import { updateImage } from "src/firebase/image";
-import firebase, { db } from "src/firebase/init";
 import { AuthContext } from "src/contexts/AuthContext";
 import { getRandomString } from "src/util/randomString";
 import { useRequireLogin } from "src/hook/useRequireLogin";
-import { gql } from "@apollo/client";
-import client from "src/apollo/apollo-client";
-import Amplify, { API, graphqlOperation, Storage } from "aws-amplify";
-import awsmobile from "src/aws-exports";
+import { API, graphqlOperation, Storage } from "aws-amplify";
 import { createArticle } from "src/graphql/mutations";
 
 const Post = () => {
@@ -21,8 +16,6 @@ const Post = () => {
   const [fileName, setFileName] = useState("");
 
   useRequireLogin();
-
-  Amplify.configure(awsmobile);
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -56,8 +49,12 @@ const Post = () => {
       // S3 Storageに追加
       let updateFileName = getRandomString(20);
       updateFileName += "." + fileName.split(".").pop();
-      const result = (await Storage.put(updateFileName, file)) as StorageResult;
+      const result = (await Storage.put(updateFileName, file, {
+        contentType: file.type,
+      })) as StorageResult;
+      console.log("result : ", result);
       const imageUrl = await Storage.get(result.key);
+      console.log("imageUrl : ", imageUrl);
 
       // DynamoDBに追加
       await API.graphql(

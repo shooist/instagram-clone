@@ -13,3 +13,13 @@ export type ArticleModelType = {
   imageUrl: string;
   createdAt: string;
 };
+
+export type Article = {
+  id: string;
+  uid?: string | null;
+  author?: string | null;
+  caption?: string | null;
+  imageUrl?: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
