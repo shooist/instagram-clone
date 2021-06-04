@@ -5,7 +5,7 @@ import * as validate from "src/util/validate";
 import { AuthContext } from "src/contexts/AuthContext";
 import { getRandomString } from "src/util/randomString";
 import { useRequireLogin } from "src/hook/useRequireLogin";
-import { API, graphqlOperation, Storage } from "aws-amplify";
+import { API, Auth, graphqlOperation, Storage } from "aws-amplify";
 import { createArticle } from "src/graphql/mutations";
 
 const Post = () => {
@@ -50,10 +50,11 @@ const Post = () => {
       let updateFileName = getRandomString(20);
       updateFileName += "." + fileName.split(".").pop();
       const result = (await Storage.put(updateFileName, file, {
+        level: "protected",
         contentType: file.type,
       })) as StorageResult;
       console.log("result : ", result);
-      const imageUrl = await Storage.get(result.key);
+      const imageUrl = result.key;
       console.log("imageUrl : ", imageUrl);
 
       // DynamoDBに追加

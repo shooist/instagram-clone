@@ -1,17 +1,30 @@
 import Image from "next/image";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { MessageContext } from "src/contexts/MessageContext";
 import type { FeedItemType, Article } from "src/types/types";
-import { AmplifyS3Image } from "@aws-amplify/ui-react";
+import { Storage } from "aws-amplify";
+import { FeedItemSkeleton } from "./FeedItemSkeleton";
 
 type FeedItemProp = { item: Article };
 
 export const FeedItem: React.VFC<FeedItemProp> = (props) => {
   const { outputMessage } = useContext(MessageContext);
+  const [imageUrl, setImageUrl] = useState("");
 
   const alertNotImplemented = () => {
     outputMessage("こちらの機能は準備中です...");
   };
+  const getImageUrl = async () => {
+    const url = (await Storage.get(props.item.imageUrl, {
+      level: "protected",
+    })) as string;
+    setImageUrl(url);
+  };
+  useEffect(() => {
+    getImageUrl();
+  }, [imageUrl]);
+
+  if (imageUrl === "") return <FeedItemSkeleton />;
 
   return (
     <div className="feed-wrapper mb-4">
@@ -45,7 +58,7 @@ export const FeedItem: React.VFC<FeedItemProp> = (props) => {
         </div>
         <div className="feed-body">
           <Image
-            src={props.item.imageUrl}
+            src={imageUrl}
             alt=""
             className="w-full object-contain"
             width={1280}
