@@ -16,13 +16,15 @@ export const FeedItem: React.VFC<FeedItemProp> = (props) => {
   };
   const getImageUrl = async () => {
     const url = (await Storage.get(props.item.imageUrl, {
-      level: "protected",
+      // level: "protected",
+      expires: 86400,
     })) as string;
     setImageUrl(url);
+    console.log("url : ", url);
   };
   useEffect(() => {
     getImageUrl();
-  }, [imageUrl]);
+  }, []);
 
   if (imageUrl === "") return <FeedItemSkeleton />;
 

@@ -9,13 +9,17 @@ import { API, Auth, graphqlOperation, Storage } from "aws-amplify";
 import { createArticle } from "src/graphql/mutations";
 
 const Post = () => {
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, signout } = useContext(AuthContext);
   const [caption, setCaption] = useState("");
   const [previewUrl, setPreviewUrl] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [fileName, setFileName] = useState("");
 
   useRequireLogin();
+
+  const handleSignOut = () => {
+    signout();
+  };
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -50,7 +54,7 @@ const Post = () => {
       let updateFileName = getRandomString(20);
       updateFileName += "." + fileName.split(".").pop();
       const result = (await Storage.put(updateFileName, file, {
-        level: "protected",
+        // level: "protected",
         contentType: file.type,
       })) as StorageResult;
       console.log("result : ", result);
@@ -76,6 +80,9 @@ const Post = () => {
   return (
     <div className="relative bg-gray-200 h-screen flex justify-center items-center flex-col">
       <div className="signin container max-w-sm bg-white border border-gray-400 text-center">
+        <div>
+          <button onClick={handleSignOut}>ログアウト</button>
+        </div>
         <div className="p-4 md:p-8">
           <Link href="/">
             <a>

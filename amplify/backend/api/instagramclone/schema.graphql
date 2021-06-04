@@ -1,4 +1,4 @@
-type Article @model @auth(rules: [{ allow: private, provider: iam }]) {
+type Article @model @auth(rules: [{ allow: public, provider: iam }]) {
   id: ID!
   uid: String
   author: String

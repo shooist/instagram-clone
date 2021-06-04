@@ -3,13 +3,13 @@ import { useRouter } from "next/router";
 import { AuthContext } from "src/contexts/AuthContext";
 
 export const useRequireLogin = () => {
-  const { currentUser, isAuthChecked } = useContext(AuthContext);
+  const { currentUser, isSignin } = useContext(AuthContext);
   const router = useRouter();
 
   // 未ログインの場合、ログインページへリダイレクト
   useEffect(() => {
-    if (isAuthChecked && !currentUser) {
+    if (isSignin && !currentUser) {
       router.push("/signin");
     }
-  }, [currentUser, isAuthChecked]);
+  }, [currentUser, isSignin]);
 };

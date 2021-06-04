@@ -12,19 +12,18 @@ import awsmobile from "src/aws-exports";
 Amplify.configure(awsmobile);
 
 const App = (props: AppProps) => {
-  const [authState, setAuthState] = useState<AuthState>();
+  // const [authState, setAuthState] = useState<AuthState>();
 
-  useEffect(() => {
-    return onAuthUIStateChange((nextAuthState, authData) => {
-      setAuthState(nextAuthState);
-    });
-  }, []);
+  // useEffect(() => {
+  //   return onAuthUIStateChange((nextAuthState, authData) => {
+  //     setAuthState(nextAuthState);
+  //   });
+  // }, []);
 
   return (
-    <AmplifyAuthenticator>
+    <AuthContextProvider>
       <props.Component {...props.pageProps} />
-      <AmplifySignOut />
-    </AmplifyAuthenticator>
+    </AuthContextProvider>
   );
 };
 
