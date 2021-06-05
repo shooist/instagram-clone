@@ -20,7 +20,7 @@ export const FeedItem: React.VFC<FeedItemProp> = (props) => {
       expires: 86400,
     })) as string;
     setImageUrl(url);
-    console.log("url : ", url);
+    // console.log("url : ", url);
   };
   useEffect(() => {
     getImageUrl();

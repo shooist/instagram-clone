@@ -22,7 +22,7 @@ export const Feeds: React.FC = () => {
   useEffect(() => {
     fetchArticles();
   }, []);
-  console.log("articles : ", articles);
+  // console.log("articles : ", articles);
 
   return (
     <div className="feeds">

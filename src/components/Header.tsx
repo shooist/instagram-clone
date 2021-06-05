@@ -1,16 +1,18 @@
 import { NextPage } from "next";
 import Link from "next/link";
-import { useContext } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { MessageContext } from "src/contexts/MessageContext";
-import { AuthContext } from "src/contexts/AuthContext";
 import Image from "next/image";
+import { Auth } from "aws-amplify";
+import { useAuthentication } from "src/hook/useAuthentication";
 
 export const Header: NextPage = () => {
-  const { currentUser, signout } = useContext(AuthContext);
   const { outputMessage } = useContext(MessageContext);
+  const { user } = useAuthentication();
+  console.log("*** header user : ", user);
 
   const handleSignout = async () => {
-    signout();
+    await Auth.signOut();
   };
   const alertNotImplemented = () => {
     outputMessage("こちらの機能は準備中です...");
@@ -87,7 +89,7 @@ export const Header: NextPage = () => {
               height={24}
             />
           </div>
-          {currentUser ? (
+          {user ? (
             <div className="hover-trigger relative flex items-center">
               <div className="profile-icon h-6 w-6 border rounded-full overflow-hidden cursor-pointer inline-flex">
                 <Image

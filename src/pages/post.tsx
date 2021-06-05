@@ -1,25 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import * as validate from "src/util/validate";
-import { AuthContext } from "src/contexts/AuthContext";
 import { getRandomString } from "src/util/randomString";
-import { useRequireLogin } from "src/hook/useRequireLogin";
 import { API, Auth, graphqlOperation, Storage } from "aws-amplify";
 import { createArticle } from "src/graphql/mutations";
 
 const Post = () => {
-  const { currentUser, signout } = useContext(AuthContext);
   const [caption, setCaption] = useState("");
   const [previewUrl, setPreviewUrl] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [fileName, setFileName] = useState("");
-
-  useRequireLogin();
-
-  const handleSignOut = () => {
-    signout();
-  };
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -80,9 +71,6 @@ const Post = () => {
   return (
     <div className="relative bg-gray-200 h-screen flex justify-center items-center flex-col">
       <div className="signin container max-w-sm bg-white border border-gray-400 text-center">
-        <div>
-          <button onClick={handleSignOut}>ログアウト</button>
-        </div>
         <div className="p-4 md:p-8">
           <Link href="/">
             <a>

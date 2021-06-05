@@ -1,6 +1,6 @@
 import { Feeds } from "src/components/Feeds";
 import { Header } from "src/components/Header";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { API, graphqlOperation } from "aws-amplify";
 import { listArticles } from "src/graphql/queries";
 import { GraphQLResult } from "@aws-amplify/api/lib/types";
