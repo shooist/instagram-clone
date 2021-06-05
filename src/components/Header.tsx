@@ -1,13 +1,12 @@
 import { NextPage } from "next";
 import Link from "next/link";
 import { useContext, useEffect, useRef } from "react";
-import { MessageContext } from "src/contexts/MessageContext";
 import Image from "next/image";
 import { Auth } from "aws-amplify";
 import { useAuthentication } from "src/hook/useAuthentication";
+import toast from "react-hot-toast";
 
 export const Header: NextPage = () => {
-  const { outputMessage } = useContext(MessageContext);
   const { user } = useAuthentication();
   console.log("*** header user : ", user);
 
@@ -15,7 +14,7 @@ export const Header: NextPage = () => {
     await Auth.signOut();
   };
   const alertNotImplemented = () => {
-    outputMessage("こちらの機能は準備中です...");
+    toast("こちらの機能は準備中です...");
   };
 
   return (
@@ -56,38 +55,14 @@ export const Header: NextPage = () => {
               </div>
             </a>
           </Link> */}
-          <div
-            className="dm-icon mr-6 cursor-pointer inline-flex"
-            onClick={alertNotImplemented}
-          >
-            <Image
-              src="/assets/img/iconDM.svg"
-              alt="dm"
-              width={24}
-              height={24}
-            />
+          <div className="dm-icon mr-6 cursor-pointer inline-flex" onClick={alertNotImplemented}>
+            <Image src="/assets/img/iconDM.svg" alt="dm" width={24} height={24} />
           </div>
-          <div
-            className="compas-icon mr-6 cursor-pointer inline-flex"
-            onClick={alertNotImplemented}
-          >
-            <Image
-              src="/assets/img/iconCompas.svg"
-              alt="compas"
-              width={24}
-              height={24}
-            />
+          <div className="compas-icon mr-6 cursor-pointer inline-flex" onClick={alertNotImplemented}>
+            <Image src="/assets/img/iconCompas.svg" alt="compas" width={24} height={24} />
           </div>
-          <div
-            className="like-icon mr-6 cursor-pointer inline-flex"
-            onClick={alertNotImplemented}
-          >
-            <Image
-              src="/assets/img/iconLike.svg"
-              alt="like"
-              width={24}
-              height={24}
-            />
+          <div className="like-icon mr-6 cursor-pointer inline-flex" onClick={alertNotImplemented}>
+            <Image src="/assets/img/iconLike.svg" alt="like" width={24} height={24} />
           </div>
           {user ? (
             <div className="hover-trigger relative flex items-center">

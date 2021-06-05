@@ -1,17 +1,12 @@
 import "tailwindcss/tailwind.css";
 import { useEffect, useState } from "react";
 import type { AppProps } from "next/app";
-import { MessageBar } from "src/components/shared/MessageBar";
-import { MessageContextProvider } from "src/contexts/MessageContext";
 import Amplify from "aws-amplify";
-import Auth, {
-  AmplifyAuthenticator,
-  AmplifySignOut,
-  AmplifySignIn,
-} from "@aws-amplify/ui-react";
+import Auth, { AmplifyAuthenticator, AmplifySignOut, AmplifySignIn } from "@aws-amplify/ui-react";
 import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components";
 import awsmobile from "src/aws-exports";
 import { useRouter } from "next/router";
+import { Toaster } from "react-hot-toast";
 
 Amplify.configure(awsmobile);
 
@@ -39,20 +34,19 @@ const App = (props: AppProps) => {
   // TOPページはログイン無しで入れる、それ以外は認証必須
   return isSignedIn ? (
     <AmplifyAuthenticator>
-      <MessageContextProvider>
-        <MessageBar />
-        <AmplifySignOut />
-        <props.Component {...props.pageProps} />
-      </MessageContextProvider>
+      <AmplifySignOut />
+      <props.Component {...props.pageProps} />
+      <Toaster />
     </AmplifyAuthenticator>
   ) : !isLoading && isIndexAccess ? (
-    <MessageContextProvider>
-      <MessageBar />
+    <>
       <props.Component {...props.pageProps} />
-    </MessageContextProvider>
+      <Toaster />
+    </>
   ) : (
     <AmplifyAuthenticator>
       <AmplifySignIn />
+      <Toaster />
     </AmplifyAuthenticator>
   );
 };
