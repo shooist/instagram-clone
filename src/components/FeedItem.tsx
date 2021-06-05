@@ -4,6 +4,7 @@ import type { FeedItemType, Article } from "src/types/types";
 import { Storage } from "aws-amplify";
 import { FeedItemSkeleton } from "./FeedItemSkeleton";
 import toast from "react-hot-toast";
+import { formatDistanceToNowStrict } from "date-fns";
 
 type FeedItemProp = { item: Article };
 
@@ -75,7 +76,9 @@ export const FeedItem: React.VFC<FeedItemProp> = (props) => {
               {props.item.caption}
             </div>
             <div className="post-date mt-1">
-              <span className="text-xs text-gray-900">1 minute ago</span>
+              <span className="text-xs text-gray-900">
+                {formatDistanceToNowStrict(new Date(props.item.createdAt), { addSuffix: true })}
+              </span>
             </div>
           </div>
           <div className="bottom border-t pt-3 mt-3">
