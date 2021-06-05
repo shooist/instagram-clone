@@ -1,14 +1,7 @@
 import React, { useContext } from "react";
 import { NextPage } from "next";
-import { AuthContext } from "src/contexts/AuthContext";
 
 export const Sidebar: NextPage = () => {
-  const { currentUser } = useContext(AuthContext);
-  let hoge = "未ログイン";
-  if (currentUser) {
-    hoge = "ログイン中！！！";
-  }
-  console.log("currentUser : ", currentUser);
   return (
     <div className="right w-4/12 overflow-visible h-full">
       <div className="first fixed pl-4 w-full">
@@ -17,10 +10,6 @@ export const Sidebar: NextPage = () => {
             <img width="56px" height="56px" src="profileIcon.png" alt="" />
           </div>
           <div className="user-name ">
-            <span className="text-lg font-semibold text-gray-700">
-              user.hoge
-            </span>
-            <span>{hoge}</span>
             {/* <span className="text-sm text-gray-600  block">Ugraphics</span> */}
           </div>
         </div>
