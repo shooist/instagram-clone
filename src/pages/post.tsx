@@ -5,6 +5,7 @@ import * as validate from "src/util/validate";
 import { getRandomString } from "src/util/randomString";
 import { API, Auth, graphqlOperation, Storage } from "aws-amplify";
 import { createArticle } from "src/graphql/mutations";
+import toast from "react-hot-toast";
 
 const Post = () => {
   const [caption, setCaption] = useState("");
@@ -39,6 +40,7 @@ const Post = () => {
       alert("画像を選択してください");
       return;
     }
+    event.currentTarget.reset();
 
     try {
       // S3 Storageに追加
@@ -63,7 +65,14 @@ const Post = () => {
           },
         })
       );
+
+      // form reset
+      setCaption("");
+      setPreviewUrl("");
+
+      toast.success("投稿しました");
     } catch (error) {
+      toast.error("投稿でエラーが発生しました");
       console.log(error);
     }
   };
@@ -74,35 +83,15 @@ const Post = () => {
         <div className="p-4 md:p-8">
           <Link href="/">
             <a>
-              <Image
-                src="/assets/img/logo.svg"
-                alt="logo"
-                width={200}
-                height={80}
-              ></Image>
+              <Image src="/assets/img/logo.svg" alt="logo" width={200} height={80}></Image>
             </a>
           </Link>
 
           <hr />
           <div className="pt-10">
             <form onSubmit={handlePost}>
-              <div>
-                {previewUrl ? (
-                  <Image
-                    alt="preview-image"
-                    src={previewUrl}
-                    width={480}
-                    height={480}
-                  />
-                ) : null}
-              </div>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
-                id="icon"
-                className="w-full mb-4"
-              />
+              <div>{previewUrl ? <Image alt="preview-image" src={previewUrl} width={480} height={480} /> : null}</div>
+              <input type="file" accept="image/*" onChange={handleImageChange} id="icon" className="w-full mb-4" />
               <textarea
                 value={caption}
                 onChange={(event) => setCaption(event.target.value)}
