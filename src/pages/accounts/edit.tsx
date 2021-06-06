@@ -27,7 +27,7 @@ const Post = () => {
       const response = (await API.graphql(graphqlOperation(getUser, { id: user.getUsername() }))) as GraphQLResult;
       const getQuery = response.data as GetUserQuery;
       console.log("response : ", response);
-      // console.log("userData : ", getQuery.getUser);
+      console.log("userData : ", getQuery.getUser);
 
       // if user is empty, create new record
       if (!getQuery.getUser) {
@@ -39,19 +39,20 @@ const Post = () => {
           })
         );
         console.log("create user recored. ID = ", user.getUsername());
+      } else {
+        const _user = getQuery.getUser;
+        setUserName(_user.name);
       }
     } catch (error) {
-      console.log("hogeerror", error);
+      console.log(error);
     }
   };
   useEffect(() => {
-    // console.log("useEffect user : ", user);
     checkUserRegist();
   }, [user]);
 
   const handlePost = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log("handlePost!!!");
 
     // Validate
     if (!userName) {
