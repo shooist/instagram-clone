@@ -2,7 +2,7 @@ import "tailwindcss/tailwind.css";
 import { useEffect, useState } from "react";
 import type { AppProps } from "next/app";
 import Amplify from "aws-amplify";
-import Auth, { AmplifyAuthenticator, AmplifySignOut, AmplifySignIn } from "@aws-amplify/ui-react";
+import { AmplifyAuthenticator, AmplifySignIn } from "@aws-amplify/ui-react";
 import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components";
 import awsmobile from "src/aws-exports";
 import { useRouter } from "next/router";
@@ -27,14 +27,13 @@ const App = (props: AppProps) => {
 
   const isSignedIn = authState === AuthState.SignedIn && user;
   const isIndexAccess = router.pathname === "/";
-  console.log("*** _app authState : ", authState);
-  console.log("*** _app user      : ", user);
-  console.log("*** _app isLoading : ", isLoading);
+  // console.log("*** _app authState : ", authState);
+  // console.log("*** _app user      : ", user);
+  // console.log("*** _app isLoading : ", isLoading);
 
   // TOPページはログイン無しで入れる、それ以外は認証必須
   return isSignedIn ? (
     <AmplifyAuthenticator>
-      <AmplifySignOut />
       <props.Component {...props.pageProps} />
       <Toaster />
     </AmplifyAuthenticator>
