@@ -9,11 +9,17 @@ export const createArticle = /* GraphQL */ `
   ) {
     createArticle(input: $input, condition: $condition) {
       id
-      uid
+      userId
       author
       caption
       imageUrl
       type
+      user {
+        id
+        name
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
@@ -26,11 +32,17 @@ export const updateArticle = /* GraphQL */ `
   ) {
     updateArticle(input: $input, condition: $condition) {
       id
-      uid
+      userId
       author
       caption
       imageUrl
       type
+      user {
+        id
+        name
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
@@ -43,11 +55,56 @@ export const deleteArticle = /* GraphQL */ `
   ) {
     deleteArticle(input: $input, condition: $condition) {
       id
-      uid
+      userId
       author
       caption
       imageUrl
       type
+      user {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createUser = /* GraphQL */ `
+  mutation CreateUser(
+    $input: CreateUserInput!
+    $condition: ModelUserConditionInput
+  ) {
+    createUser(input: $input, condition: $condition) {
+      id
+      name
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateUser = /* GraphQL */ `
+  mutation UpdateUser(
+    $input: UpdateUserInput!
+    $condition: ModelUserConditionInput
+  ) {
+    updateUser(input: $input, condition: $condition) {
+      id
+      name
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteUser = /* GraphQL */ `
+  mutation DeleteUser(
+    $input: DeleteUserInput!
+    $condition: ModelUserConditionInput
+  ) {
+    deleteUser(input: $input, condition: $condition) {
+      id
+      name
       createdAt
       updatedAt
     }

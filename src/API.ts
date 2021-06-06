@@ -4,7 +4,7 @@
 
 export type CreateArticleInput = {
   id?: string | null,
-  uid?: string | null,
+  userId: string,
   author?: string | null,
   caption?: string | null,
   imageUrl?: string | null,
@@ -13,7 +13,7 @@ export type CreateArticleInput = {
 };
 
 export type ModelArticleConditionInput = {
-  uid?: ModelStringInput | null,
+  userId?: ModelIDInput | null,
   author?: ModelStringInput | null,
   caption?: ModelStringInput | null,
   imageUrl?: ModelStringInput | null,
@@ -24,7 +24,7 @@ export type ModelArticleConditionInput = {
   not?: ModelArticleConditionInput | null,
 };
 
-export type ModelStringInput = {
+export type ModelIDInput = {
   ne?: string | null,
   eq?: string | null,
   le?: string | null,
@@ -64,21 +64,46 @@ export type ModelSizeInput = {
   between?: Array< number | null > | null,
 };
 
+export type ModelStringInput = {
+  ne?: string | null,
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  contains?: string | null,
+  notContains?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+  size?: ModelSizeInput | null,
+};
+
 export type Article = {
   __typename: "Article",
   id: string,
-  uid?: string | null,
+  userId: string,
   author?: string | null,
   caption?: string | null,
   imageUrl?: string | null,
   type: string,
+  user?: User | null,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type User = {
+  __typename: "User",
+  id: string,
+  name?: string | null,
   createdAt: string,
   updatedAt: string,
 };
 
 export type UpdateArticleInput = {
   id: string,
-  uid?: string | null,
+  userId?: string | null,
   author?: string | null,
   caption?: string | null,
   imageUrl?: string | null,
@@ -87,6 +112,27 @@ export type UpdateArticleInput = {
 };
 
 export type DeleteArticleInput = {
+  id: string,
+};
+
+export type CreateUserInput = {
+  id?: string | null,
+  name?: string | null,
+};
+
+export type ModelUserConditionInput = {
+  name?: ModelStringInput | null,
+  and?: Array< ModelUserConditionInput | null > | null,
+  or?: Array< ModelUserConditionInput | null > | null,
+  not?: ModelUserConditionInput | null,
+};
+
+export type UpdateUserInput = {
+  id: string,
+  name?: string | null,
+};
+
+export type DeleteUserInput = {
   id: string,
 };
 
@@ -117,7 +163,7 @@ export type DeleteHogeInput = {
 
 export type ModelArticleFilterInput = {
   id?: ModelIDInput | null,
-  uid?: ModelStringInput | null,
+  userId?: ModelIDInput | null,
   author?: ModelStringInput | null,
   caption?: ModelStringInput | null,
   imageUrl?: ModelStringInput | null,
@@ -128,25 +174,23 @@ export type ModelArticleFilterInput = {
   not?: ModelArticleFilterInput | null,
 };
 
-export type ModelIDInput = {
-  ne?: string | null,
-  eq?: string | null,
-  le?: string | null,
-  lt?: string | null,
-  ge?: string | null,
-  gt?: string | null,
-  contains?: string | null,
-  notContains?: string | null,
-  between?: Array< string | null > | null,
-  beginsWith?: string | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-  size?: ModelSizeInput | null,
-};
-
 export type ModelArticleConnection = {
   __typename: "ModelArticleConnection",
   items?:  Array<Article | null > | null,
+  nextToken?: string | null,
+};
+
+export type ModelUserFilterInput = {
+  id?: ModelIDInput | null,
+  name?: ModelStringInput | null,
+  and?: Array< ModelUserFilterInput | null > | null,
+  or?: Array< ModelUserFilterInput | null > | null,
+  not?: ModelUserFilterInput | null,
+};
+
+export type ModelUserConnection = {
+  __typename: "ModelUserConnection",
+  items?:  Array<User | null > | null,
   nextToken?: string | null,
 };
 
@@ -188,11 +232,18 @@ export type CreateArticleMutation = {
   createArticle?:  {
     __typename: "Article",
     id: string,
-    uid?: string | null,
+    userId: string,
     author?: string | null,
     caption?: string | null,
     imageUrl?: string | null,
     type: string,
+    user?:  {
+      __typename: "User",
+      id: string,
+      name?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -207,11 +258,18 @@ export type UpdateArticleMutation = {
   updateArticle?:  {
     __typename: "Article",
     id: string,
-    uid?: string | null,
+    userId: string,
     author?: string | null,
     caption?: string | null,
     imageUrl?: string | null,
     type: string,
+    user?:  {
+      __typename: "User",
+      id: string,
+      name?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -226,11 +284,63 @@ export type DeleteArticleMutation = {
   deleteArticle?:  {
     __typename: "Article",
     id: string,
-    uid?: string | null,
+    userId: string,
     author?: string | null,
     caption?: string | null,
     imageUrl?: string | null,
     type: string,
+    user?:  {
+      __typename: "User",
+      id: string,
+      name?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type CreateUserMutationVariables = {
+  input: CreateUserInput,
+  condition?: ModelUserConditionInput | null,
+};
+
+export type CreateUserMutation = {
+  createUser?:  {
+    __typename: "User",
+    id: string,
+    name?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateUserMutationVariables = {
+  input: UpdateUserInput,
+  condition?: ModelUserConditionInput | null,
+};
+
+export type UpdateUserMutation = {
+  updateUser?:  {
+    __typename: "User",
+    id: string,
+    name?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteUserMutationVariables = {
+  input: DeleteUserInput,
+  condition?: ModelUserConditionInput | null,
+};
+
+export type DeleteUserMutation = {
+  deleteUser?:  {
+    __typename: "User",
+    id: string,
+    name?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -286,11 +396,18 @@ export type GetArticleQuery = {
   getArticle?:  {
     __typename: "Article",
     id: string,
-    uid?: string | null,
+    userId: string,
     author?: string | null,
     caption?: string | null,
     imageUrl?: string | null,
     type: string,
+    user?:  {
+      __typename: "User",
+      id: string,
+      name?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -308,11 +425,45 @@ export type ListArticlesQuery = {
     items?:  Array< {
       __typename: "Article",
       id: string,
-      uid?: string | null,
+      userId: string,
       author?: string | null,
       caption?: string | null,
       imageUrl?: string | null,
       type: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null > | null,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetUserQueryVariables = {
+  id: string,
+};
+
+export type GetUserQuery = {
+  getUser?:  {
+    __typename: "User",
+    id: string,
+    name?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListUsersQueryVariables = {
+  filter?: ModelUserFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListUsersQuery = {
+  listUsers?:  {
+    __typename: "ModelUserConnection",
+    items?:  Array< {
+      __typename: "User",
+      id: string,
+      name?: string | null,
       createdAt: string,
       updatedAt: string,
     } | null > | null,
@@ -367,7 +518,7 @@ export type ListArticlesByCreatedAtQuery = {
     items?:  Array< {
       __typename: "Article",
       id: string,
-      uid?: string | null,
+      userId: string,
       author?: string | null,
       caption?: string | null,
       imageUrl?: string | null,
@@ -383,11 +534,18 @@ export type OnCreateArticleSubscription = {
   onCreateArticle?:  {
     __typename: "Article",
     id: string,
-    uid?: string | null,
+    userId: string,
     author?: string | null,
     caption?: string | null,
     imageUrl?: string | null,
     type: string,
+    user?:  {
+      __typename: "User",
+      id: string,
+      name?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -397,11 +555,18 @@ export type OnUpdateArticleSubscription = {
   onUpdateArticle?:  {
     __typename: "Article",
     id: string,
-    uid?: string | null,
+    userId: string,
     author?: string | null,
     caption?: string | null,
     imageUrl?: string | null,
     type: string,
+    user?:  {
+      __typename: "User",
+      id: string,
+      name?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -411,11 +576,48 @@ export type OnDeleteArticleSubscription = {
   onDeleteArticle?:  {
     __typename: "Article",
     id: string,
-    uid?: string | null,
+    userId: string,
     author?: string | null,
     caption?: string | null,
     imageUrl?: string | null,
     type: string,
+    user?:  {
+      __typename: "User",
+      id: string,
+      name?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateUserSubscription = {
+  onCreateUser?:  {
+    __typename: "User",
+    id: string,
+    name?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateUserSubscription = {
+  onUpdateUser?:  {
+    __typename: "User",
+    id: string,
+    name?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteUserSubscription = {
+  onDeleteUser?:  {
+    __typename: "User",
+    id: string,
+    name?: string | null,
     createdAt: string,
     updatedAt: string,
   } | null,

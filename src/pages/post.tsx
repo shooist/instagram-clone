@@ -6,12 +6,14 @@ import { getRandomString } from "src/util/randomString";
 import { API, Auth, graphqlOperation, Storage } from "aws-amplify";
 import { createArticle } from "src/graphql/mutations";
 import toast from "react-hot-toast";
+import { useAuthentication } from "src/hook/useAuthentication";
 
 const Post = () => {
   const [caption, setCaption] = useState("");
   const [previewUrl, setPreviewUrl] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [fileName, setFileName] = useState("");
+  const { user } = useAuthentication();
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -50,16 +52,15 @@ const Post = () => {
         // level: "protected",
         contentType: file.type,
       })) as StorageResult;
-      console.log("result : ", result);
+      // console.log("result : ", result);
       const imageUrl = result.key;
-      console.log("imageUrl : ", imageUrl);
+      // console.log("imageUrl : ", imageUrl);
 
       // DynamoDBに追加
       await API.graphql(
         graphqlOperation(createArticle, {
           input: {
-            // uid: currentUser.uid,
-            // author: currentUser.displayName,
+            userId: user.getUsername(),
             caption: caption,
             imageUrl: imageUrl,
             type: "article",

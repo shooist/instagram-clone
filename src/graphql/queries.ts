@@ -6,11 +6,17 @@ export const getArticle = /* GraphQL */ `
   query GetArticle($id: ID!) {
     getArticle(id: $id) {
       id
-      uid
+      userId
       author
       caption
       imageUrl
       type
+      user {
+        id
+        name
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
@@ -25,11 +31,38 @@ export const listArticles = /* GraphQL */ `
     listArticles(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        uid
+        userId
         author
         caption
         imageUrl
         type
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getUser = /* GraphQL */ `
+  query GetUser($id: ID!) {
+    getUser(id: $id) {
+      id
+      name
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listUsers = /* GraphQL */ `
+  query ListUsers(
+    $filter: ModelUserFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
         createdAt
         updatedAt
       }
@@ -81,7 +114,7 @@ export const listArticlesByCreatedAt = /* GraphQL */ `
     ) {
       items {
         id
-        uid
+        userId
         author
         caption
         imageUrl

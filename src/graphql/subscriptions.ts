@@ -6,11 +6,17 @@ export const onCreateArticle = /* GraphQL */ `
   subscription OnCreateArticle {
     onCreateArticle {
       id
-      uid
+      userId
       author
       caption
       imageUrl
       type
+      user {
+        id
+        name
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
@@ -20,11 +26,17 @@ export const onUpdateArticle = /* GraphQL */ `
   subscription OnUpdateArticle {
     onUpdateArticle {
       id
-      uid
+      userId
       author
       caption
       imageUrl
       type
+      user {
+        id
+        name
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
@@ -34,11 +46,47 @@ export const onDeleteArticle = /* GraphQL */ `
   subscription OnDeleteArticle {
     onDeleteArticle {
       id
-      uid
+      userId
       author
       caption
       imageUrl
       type
+      user {
+        id
+        name
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateUser = /* GraphQL */ `
+  subscription OnCreateUser {
+    onCreateUser {
+      id
+      name
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateUser = /* GraphQL */ `
+  subscription OnUpdateUser {
+    onUpdateUser {
+      id
+      name
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteUser = /* GraphQL */ `
+  subscription OnDeleteUser {
+    onDeleteUser {
+      id
+      name
       createdAt
       updatedAt
     }

@@ -87,6 +87,11 @@ export const Header: NextPage = () => {
                     </Link>
                   </li>
                   <li className=" hover:bg-gray-200">
+                    <Link href="/accounts/edit">
+                      <a className="px-6 py-3 block">登録情報変更</a>
+                    </Link>
+                  </li>
+                  <li className=" hover:bg-gray-200">
                     <button onClick={handleSignout} className="px-6 py-3">
                       ログアウト
                     </button>
