@@ -10,6 +10,7 @@ export const onCreateArticle = /* GraphQL */ `
       author
       caption
       imageUrl
+      type
       createdAt
       updatedAt
     }
@@ -23,6 +24,7 @@ export const onUpdateArticle = /* GraphQL */ `
       author
       caption
       imageUrl
+      type
       createdAt
       updatedAt
     }
@@ -36,6 +38,34 @@ export const onDeleteArticle = /* GraphQL */ `
       author
       caption
       imageUrl
+      type
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateHoge = /* GraphQL */ `
+  subscription OnCreateHoge {
+    onCreateHoge {
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateHoge = /* GraphQL */ `
+  subscription OnUpdateHoge {
+    onUpdateHoge {
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteHoge = /* GraphQL */ `
+  subscription OnDeleteHoge {
+    onDeleteHoge {
+      id
       createdAt
       updatedAt
     }

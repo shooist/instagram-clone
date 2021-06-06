@@ -13,6 +13,7 @@ export const createArticle = /* GraphQL */ `
       author
       caption
       imageUrl
+      type
       createdAt
       updatedAt
     }
@@ -29,6 +30,7 @@ export const updateArticle = /* GraphQL */ `
       author
       caption
       imageUrl
+      type
       createdAt
       updatedAt
     }
@@ -45,6 +47,43 @@ export const deleteArticle = /* GraphQL */ `
       author
       caption
       imageUrl
+      type
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createHoge = /* GraphQL */ `
+  mutation CreateHoge(
+    $input: CreateHogeInput!
+    $condition: ModelHogeConditionInput
+  ) {
+    createHoge(input: $input, condition: $condition) {
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateHoge = /* GraphQL */ `
+  mutation UpdateHoge(
+    $input: UpdateHogeInput!
+    $condition: ModelHogeConditionInput
+  ) {
+    updateHoge(input: $input, condition: $condition) {
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteHoge = /* GraphQL */ `
+  mutation DeleteHoge(
+    $input: DeleteHogeInput!
+    $condition: ModelHogeConditionInput
+  ) {
+    deleteHoge(input: $input, condition: $condition) {
+      id
       createdAt
       updatedAt
     }

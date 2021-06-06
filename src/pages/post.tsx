@@ -62,6 +62,7 @@ const Post = () => {
             // author: currentUser.displayName,
             caption: caption,
             imageUrl: imageUrl,
+            type: "article",
           },
         })
       );

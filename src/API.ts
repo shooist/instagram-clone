@@ -8,6 +8,8 @@ export type CreateArticleInput = {
   author?: string | null,
   caption?: string | null,
   imageUrl?: string | null,
+  type: string,
+  createdAt?: string | null,
 };
 
 export type ModelArticleConditionInput = {
@@ -15,6 +17,8 @@ export type ModelArticleConditionInput = {
   author?: ModelStringInput | null,
   caption?: ModelStringInput | null,
   imageUrl?: ModelStringInput | null,
+  type?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
   and?: Array< ModelArticleConditionInput | null > | null,
   or?: Array< ModelArticleConditionInput | null > | null,
   not?: ModelArticleConditionInput | null,
@@ -67,6 +71,7 @@ export type Article = {
   author?: string | null,
   caption?: string | null,
   imageUrl?: string | null,
+  type: string,
   createdAt: string,
   updatedAt: string,
 };
@@ -77,9 +82,36 @@ export type UpdateArticleInput = {
   author?: string | null,
   caption?: string | null,
   imageUrl?: string | null,
+  type?: string | null,
+  createdAt?: string | null,
 };
 
 export type DeleteArticleInput = {
+  id: string,
+};
+
+export type CreateHogeInput = {
+  id?: string | null,
+};
+
+export type ModelHogeConditionInput = {
+  and?: Array< ModelHogeConditionInput | null > | null,
+  or?: Array< ModelHogeConditionInput | null > | null,
+  not?: ModelHogeConditionInput | null,
+};
+
+export type Hoge = {
+  __typename: "Hoge",
+  id: string,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type UpdateHogeInput = {
+  id: string,
+};
+
+export type DeleteHogeInput = {
   id: string,
 };
 
@@ -89,6 +121,8 @@ export type ModelArticleFilterInput = {
   author?: ModelStringInput | null,
   caption?: ModelStringInput | null,
   imageUrl?: ModelStringInput | null,
+  type?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
   and?: Array< ModelArticleFilterInput | null > | null,
   or?: Array< ModelArticleFilterInput | null > | null,
   not?: ModelArticleFilterInput | null,
@@ -116,6 +150,35 @@ export type ModelArticleConnection = {
   nextToken?: string | null,
 };
 
+export type ModelHogeFilterInput = {
+  id?: ModelIDInput | null,
+  and?: Array< ModelHogeFilterInput | null > | null,
+  or?: Array< ModelHogeFilterInput | null > | null,
+  not?: ModelHogeFilterInput | null,
+};
+
+export type ModelHogeConnection = {
+  __typename: "ModelHogeConnection",
+  items?:  Array<Hoge | null > | null,
+  nextToken?: string | null,
+};
+
+export type ModelStringKeyConditionInput = {
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+};
+
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC",
+}
+
+
 export type CreateArticleMutationVariables = {
   input: CreateArticleInput,
   condition?: ModelArticleConditionInput | null,
@@ -129,6 +192,7 @@ export type CreateArticleMutation = {
     author?: string | null,
     caption?: string | null,
     imageUrl?: string | null,
+    type: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -147,6 +211,7 @@ export type UpdateArticleMutation = {
     author?: string | null,
     caption?: string | null,
     imageUrl?: string | null,
+    type: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -165,6 +230,49 @@ export type DeleteArticleMutation = {
     author?: string | null,
     caption?: string | null,
     imageUrl?: string | null,
+    type: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type CreateHogeMutationVariables = {
+  input: CreateHogeInput,
+  condition?: ModelHogeConditionInput | null,
+};
+
+export type CreateHogeMutation = {
+  createHoge?:  {
+    __typename: "Hoge",
+    id: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateHogeMutationVariables = {
+  input: UpdateHogeInput,
+  condition?: ModelHogeConditionInput | null,
+};
+
+export type UpdateHogeMutation = {
+  updateHoge?:  {
+    __typename: "Hoge",
+    id: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteHogeMutationVariables = {
+  input: DeleteHogeInput,
+  condition?: ModelHogeConditionInput | null,
+};
+
+export type DeleteHogeMutation = {
+  deleteHoge?:  {
+    __typename: "Hoge",
+    id: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -182,6 +290,7 @@ export type GetArticleQuery = {
     author?: string | null,
     caption?: string | null,
     imageUrl?: string | null,
+    type: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -203,6 +312,66 @@ export type ListArticlesQuery = {
       author?: string | null,
       caption?: string | null,
       imageUrl?: string | null,
+      type: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null > | null,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetHogeQueryVariables = {
+  id: string,
+};
+
+export type GetHogeQuery = {
+  getHoge?:  {
+    __typename: "Hoge",
+    id: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListHogesQueryVariables = {
+  filter?: ModelHogeFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListHogesQuery = {
+  listHoges?:  {
+    __typename: "ModelHogeConnection",
+    items?:  Array< {
+      __typename: "Hoge",
+      id: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null > | null,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type ListArticlesByCreatedAtQueryVariables = {
+  type?: string | null,
+  createdAt?: ModelStringKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelArticleFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListArticlesByCreatedAtQuery = {
+  listArticlesByCreatedAt?:  {
+    __typename: "ModelArticleConnection",
+    items?:  Array< {
+      __typename: "Article",
+      id: string,
+      uid?: string | null,
+      author?: string | null,
+      caption?: string | null,
+      imageUrl?: string | null,
+      type: string,
       createdAt: string,
       updatedAt: string,
     } | null > | null,
@@ -218,6 +387,7 @@ export type OnCreateArticleSubscription = {
     author?: string | null,
     caption?: string | null,
     imageUrl?: string | null,
+    type: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -231,6 +401,7 @@ export type OnUpdateArticleSubscription = {
     author?: string | null,
     caption?: string | null,
     imageUrl?: string | null,
+    type: string,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -244,6 +415,34 @@ export type OnDeleteArticleSubscription = {
     author?: string | null,
     caption?: string | null,
     imageUrl?: string | null,
+    type: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnCreateHogeSubscription = {
+  onCreateHoge?:  {
+    __typename: "Hoge",
+    id: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateHogeSubscription = {
+  onUpdateHoge?:  {
+    __typename: "Hoge",
+    id: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteHogeSubscription = {
+  onDeleteHoge?:  {
+    __typename: "Hoge",
+    id: string,
     createdAt: string,
     updatedAt: string,
   } | null,

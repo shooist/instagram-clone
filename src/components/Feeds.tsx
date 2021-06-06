@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { FeedItem } from "src/components/FeedItem";
 import { API, graphqlOperation } from "aws-amplify";
-import { listArticles } from "src/graphql/queries";
+import { listArticlesByCreatedAt } from "src/graphql/queries";
 import { GraphQLResult } from "@aws-amplify/api/lib/types";
-import { ListArticlesQuery } from "src/API";
+import { ListArticlesByCreatedAtQuery } from "src/API";
 import { Article } from "src/types/types";
 
 // type FeedsItemProp = { items: FeedItemType[] };
@@ -12,17 +12,14 @@ export const Feeds: React.FC = () => {
   const [articles, setArticles] = useState<Article[]>([]);
   const fetchArticles = async () => {
     const response = (await API.graphql(
-      graphqlOperation(listArticles)
+      graphqlOperation(listArticlesByCreatedAt, { type: "article", sortDirection: "DESC" })
     )) as GraphQLResult;
-    const articles = response.data as ListArticlesQuery;
-    if (articles.listArticles !== null) {
-      setArticles(articles.listArticles.items as Article[]);
-    }
+    const articles = response.data as ListArticlesByCreatedAtQuery;
+    setArticles(articles.listArticlesByCreatedAt.items as Article[]);
   };
   useEffect(() => {
     fetchArticles();
   }, []);
-  // console.log("articles : ", articles);
 
   return (
     <div className="feeds">
