@@ -36,6 +36,12 @@ export const listArticles = /* GraphQL */ `
         caption
         imageUrl
         type
+        user {
+          id
+          name
+          createdAt
+          updatedAt
+        }
         createdAt
         updatedAt
       }
@@ -119,6 +125,12 @@ export const listArticlesByCreatedAt = /* GraphQL */ `
         caption
         imageUrl
         type
+        user {
+          id
+          name
+          createdAt
+          updatedAt
+        }
         createdAt
         updatedAt
       }

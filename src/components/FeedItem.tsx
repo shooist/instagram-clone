@@ -1,10 +1,11 @@
 import Image from "next/image";
 import { useContext, useEffect, useState } from "react";
-import type { FeedItemType, Article } from "src/types/types";
+import type { FeedItemType } from "src/types/types";
 import { Storage } from "aws-amplify";
 import { FeedItemSkeleton } from "./FeedItemSkeleton";
 import toast from "react-hot-toast";
 import { formatDistanceToNowStrict } from "date-fns";
+import { Article } from "src/API";
 
 type FeedItemProp = { item: Article };
 
@@ -37,7 +38,7 @@ export const FeedItem: React.VFC<FeedItemProp> = (props) => {
               <Image src="/assets/img/profileIcon.png" alt="user-avatar" draggable="false" width={38} height={38} />
             </div>
             <div className="user-name-and-place flex flex-col">
-              <span className="text-sm font-bold">{props.item.author}</span>
+              <span className="text-sm font-bold">{props.item.user?.name}</span>
               <span className="text-xs font-light text-gray-900">Chiapas, Mexico</span>
             </div>
           </div>

@@ -3,8 +3,8 @@ import { FeedItem } from "src/components/FeedItem";
 import { API, graphqlOperation } from "aws-amplify";
 import { listArticlesByCreatedAt } from "src/graphql/queries";
 import { GraphQLResult } from "@aws-amplify/api/lib/types";
-import { ListArticlesByCreatedAtQuery } from "src/API";
-import { Article } from "src/types/types";
+import { ListArticlesByCreatedAtQuery, Article } from "src/API";
+// import { Article } from "src/types/types";
 
 // type FeedsItemProp = { items: FeedItemType[] };
 
