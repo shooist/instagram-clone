@@ -33,11 +33,11 @@ const Post = () => {
 
     // Validate
     if (!caption) {
-      alert("キャプションを入力してください");
+      toast.error("キャプションを入力してください");
       return;
     }
     if (!fileName) {
-      alert("画像を選択してください");
+      toast.error("画像を選択してください");
       return;
     }
     event.currentTarget.reset();
