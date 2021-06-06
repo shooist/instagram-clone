@@ -18,7 +18,7 @@ const App = (props: AppProps) => {
 
   useEffect(() => {
     return onAuthUIStateChange((nextAuthState, authData) => {
-      console.log("_app onAuthUIStateChange");
+      // console.log("_app onAuthUIStateChange");
       setAuthState(nextAuthState);
       setUser(authData);
       setIsLoading(false);

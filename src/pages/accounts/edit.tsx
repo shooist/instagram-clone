@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { API, graphqlOperation } from "aws-amplify";
-import { createArticle } from "src/graphql/mutations";
 import toast from "react-hot-toast";
 import { useAuthentication } from "src/hook/useAuthentication";
 import { getUser } from "src/graphql/queries";
@@ -20,14 +19,14 @@ const Post = () => {
 
     try {
       setUserId(user.getUsername());
-      console.log("user : ", user);
-      console.log("username : ", user.getUsername());
+      // console.log("user : ", user);
+      // console.log("username : ", user.getUsername());
 
       // select user query
       const response = (await API.graphql(graphqlOperation(getUser, { id: user.getUsername() }))) as GraphQLResult;
       const getQuery = response.data as GetUserQuery;
-      console.log("response : ", response);
-      console.log("userData : ", getQuery.getUser);
+      // console.log("response : ", response);
+      // console.log("userData : ", getQuery.getUser);
 
       // if user is empty, create new record
       if (!getQuery.getUser) {
@@ -92,8 +91,6 @@ const Post = () => {
           <div className="pt-10">
             <p className="text-left font-bold mb-2">プロフィールを編集</p>
             <form onSubmit={handlePost}>
-              {/* <div>{previewUrl ? <Image alt="preview-image" src={previewUrl} width={480} height={480} /> : null}</div>
-              <input type="file" accept="image/*" onChange={handleImageChange} id="icon" className="w-full mb-4" /> */}
               <input
                 type="text"
                 value={userName}

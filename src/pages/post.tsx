@@ -1,9 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useContext, useEffect } from "react";
+import { useState } from "react";
 import * as validate from "src/util/validate";
 import { getRandomString } from "src/util/randomString";
-import { API, Auth, graphqlOperation, Storage } from "aws-amplify";
+import { API, graphqlOperation, Storage } from "aws-amplify";
 import { createArticle } from "src/graphql/mutations";
 import toast from "react-hot-toast";
 import { useAuthentication } from "src/hook/useAuthentication";

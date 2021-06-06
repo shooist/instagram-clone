@@ -1,8 +1,7 @@
 import Image from "next/image";
-import { useContext, useEffect, useState } from "react";
-import type { FeedItemType } from "src/types/types";
+import { useEffect, useState } from "react";
 import { Storage } from "aws-amplify";
-import { FeedItemSkeleton } from "./FeedItemSkeleton";
+import { FeedItemSkeleton } from "src/components/FeedItemSkeleton";
 import toast from "react-hot-toast";
 import { formatDistanceToNowStrict } from "date-fns";
 import { Article } from "src/API";

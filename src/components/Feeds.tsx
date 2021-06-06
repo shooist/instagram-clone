@@ -4,9 +4,6 @@ import { API, graphqlOperation } from "aws-amplify";
 import { listArticlesByCreatedAt } from "src/graphql/queries";
 import { GraphQLResult } from "@aws-amplify/api/lib/types";
 import { ListArticlesByCreatedAtQuery, Article } from "src/API";
-// import { Article } from "src/types/types";
-
-// type FeedsItemProp = { items: FeedItemType[] };
 
 export const Feeds: React.FC = () => {
   const [articles, setArticles] = useState<Article[]>([]);

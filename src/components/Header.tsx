@@ -1,6 +1,5 @@
 import { NextPage } from "next";
 import Link from "next/link";
-import { useContext, useEffect, useRef } from "react";
 import Image from "next/image";
 import { Auth } from "aws-amplify";
 import { useAuthentication } from "src/hook/useAuthentication";
@@ -8,7 +7,7 @@ import toast from "react-hot-toast";
 
 export const Header: NextPage = () => {
   const { user } = useAuthentication();
-  console.log("*** header user : ", user);
+  // console.log("*** header user : ", user);
 
   const handleSignout = async () => {
     await Auth.signOut();
