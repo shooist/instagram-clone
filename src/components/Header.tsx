@@ -14,7 +14,9 @@ export const Header: NextPage = () => {
     await Auth.signOut();
   };
   const alertNotImplemented = () => {
-    toast("こちらの機能は準備中です...");
+    toast("こちらの機能は準備中です...", {
+      icon: "🙏",
+    });
   };
 
   return (
