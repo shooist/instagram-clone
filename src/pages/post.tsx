@@ -1,21 +1,19 @@
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useContext } from "react";
+import { useState } from "react";
 import * as validate from "src/util/validate";
-import { updateImage } from "src/firebase/image";
-import firebase, { db } from "src/firebase/init";
-import { AuthContext } from "src/contexts/AuthContext";
 import { getRandomString } from "src/util/randomString";
-import { useRequireLogin } from "src/hook/useRequireLogin";
+import { API, graphqlOperation, Storage } from "aws-amplify";
+import { createArticle } from "src/graphql/mutations";
+import toast from "react-hot-toast";
+import { useAuthentication } from "src/hook/useAuthentication";
 
 const Post = () => {
-  const { currentUser } = useContext(AuthContext);
   const [caption, setCaption] = useState("");
   const [previewUrl, setPreviewUrl] = useState("");
   const [file, setFile] = useState<File | null>(null);
   const [fileName, setFileName] = useState("");
-
-  useRequireLogin();
+  const { user } = useAuthentication();
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -31,32 +29,54 @@ const Post = () => {
     };
     reader.readAsDataURL(file);
   };
+  type StorageResult = { key: string };
   const handlePost = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     // Validate
     if (!caption) {
-      alert("キャプションを入力してください");
+      toast.error("キャプションを入力してください");
       return;
     }
     if (!fileName) {
-      alert("画像を選択してください");
+      toast.error("画像を選択してください");
       return;
     }
+    event.currentTarget.reset();
 
-    // Storageに追加
-    let updateFileName = getRandomString(20);
-    updateFileName += "." + fileName.split(".").pop();
-    const imageUrl = await updateImage(updateFileName, file);
+    try {
+      // S3 Storageに追加
+      let updateFileName = getRandomString(20);
+      updateFileName += "." + fileName.split(".").pop();
+      const result = (await Storage.put(updateFileName, file, {
+        // level: "protected",
+        contentType: file.type,
+      })) as StorageResult;
+      // console.log("result : ", result);
+      const imageUrl = result.key;
+      // console.log("imageUrl : ", imageUrl);
 
-    // DB(Firestore）に追加
-    await db.collection("articles").add({
-      uid: currentUser.uid,
-      author: currentUser.displayName,
-      caption: caption,
-      imageUrl: imageUrl,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-    });
+      // DynamoDBに追加
+      await API.graphql(
+        graphqlOperation(createArticle, {
+          input: {
+            userId: user.getUsername(),
+            caption: caption,
+            imageUrl: imageUrl,
+            type: "article",
+          },
+        })
+      );
+
+      // form reset
+      setCaption("");
+      setPreviewUrl("");
+
+      toast.success("投稿しました");
+    } catch (error) {
+      toast.error("投稿でエラーが発生しました");
+      console.log(error);
+    }
   };
 
   return (
@@ -65,35 +85,15 @@ const Post = () => {
         <div className="p-4 md:p-8">
           <Link href="/">
             <a>
-              <Image
-                src="/assets/img/logo.svg"
-                alt="logo"
-                width={200}
-                height={80}
-              ></Image>
+              <Image src="/assets/img/logo.svg" alt="logo" width={200} height={80}></Image>
             </a>
           </Link>
 
           <hr />
           <div className="pt-10">
             <form onSubmit={handlePost}>
-              <div>
-                {previewUrl ? (
-                  <Image
-                    alt="preview-image"
-                    src={previewUrl}
-                    width={480}
-                    height={480}
-                  />
-                ) : null}
-              </div>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
-                id="icon"
-                className="w-full mb-4"
-              />
+              <div>{previewUrl ? <Image alt="preview-image" src={previewUrl} width={480} height={480} /> : null}</div>
+              <input type="file" accept="image/*" onChange={handleImageChange} id="icon" className="w-full mb-4" />
               <textarea
                 value={caption}
                 onChange={(event) => setCaption(event.target.value)}

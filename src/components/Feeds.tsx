@@ -1,32 +1,26 @@
-import type { VFC } from "react";
+import { useEffect, useState } from "react";
 import { FeedItem } from "src/components/FeedItem";
-import { FeedItemSkeleton } from "src/components/FeedItemSkeleton";
-import { FeedItemType } from "src/types/types";
-import useSWR from "swr";
-import fetch from "isomorphic-unfetch";
+import { API, graphqlOperation } from "aws-amplify";
+import { listArticlesByCreatedAt } from "src/graphql/queries";
+import { GraphQLResult } from "@aws-amplify/api/lib/types";
+import { ListArticlesByCreatedAtQuery, Article } from "src/API";
 
-const url =
-  "https://asia-northeast1-instagram-clone-e2448.cloudfunctions.net/api/articles";
-const fetcher = (url) => fetch(url).then((res) => res.json());
-
-export const Feeds: VFC = () => {
-  const { data, error } = useSWR<FeedItemType[]>(url, fetcher);
-
-  if (error) {
-    // TODO: 検索結果が取得できなかった場合のエラー処理
-    return <div>error</div>;
-  }
-
-  if (!data) {
-    return <FeedItemSkeleton />;
-  }
-
-  const items = data["messages"];
-  console.log("items => ", items);
+export const Feeds: React.FC = () => {
+  const [articles, setArticles] = useState<Article[]>([]);
+  const fetchArticles = async () => {
+    const response = (await API.graphql(
+      graphqlOperation(listArticlesByCreatedAt, { type: "article", sortDirection: "DESC" })
+    )) as GraphQLResult;
+    const articles = response.data as ListArticlesByCreatedAtQuery;
+    setArticles(articles.listArticlesByCreatedAt.items as Article[]);
+  };
+  useEffect(() => {
+    fetchArticles();
+  }, []);
 
   return (
     <div className="feeds">
-      {items.map((item) => {
+      {articles.map((item) => {
         return <FeedItem item={item} key={item.id} />;
       })}
     </div>

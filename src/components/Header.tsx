@@ -1,19 +1,21 @@
 import { NextPage } from "next";
 import Link from "next/link";
-import { useContext } from "react";
-import { MessageContext } from "src/contexts/MessageContext";
-import { AuthContext } from "src/contexts/AuthContext";
 import Image from "next/image";
+import { Auth } from "aws-amplify";
+import { useAuthentication } from "src/hook/useAuthentication";
+import toast from "react-hot-toast";
 
 export const Header: NextPage = () => {
-  const { currentUser, signout } = useContext(AuthContext);
-  const { outputMessage } = useContext(MessageContext);
+  const { user } = useAuthentication();
+  // console.log("*** header user : ", user);
 
   const handleSignout = async () => {
-    signout();
+    await Auth.signOut();
   };
   const alertNotImplemented = () => {
-    outputMessage("こちらの機能は準備中です...");
+    toast("こちらの機能は準備中です...", {
+      icon: "🙏",
+    });
   };
 
   return (
@@ -54,40 +56,16 @@ export const Header: NextPage = () => {
               </div>
             </a>
           </Link> */}
-          <div
-            className="dm-icon mr-6 cursor-pointer inline-flex"
-            onClick={alertNotImplemented}
-          >
-            <Image
-              src="/assets/img/iconDM.svg"
-              alt="dm"
-              width={24}
-              height={24}
-            />
+          <div className="dm-icon mr-6 cursor-pointer inline-flex" onClick={alertNotImplemented}>
+            <Image src="/assets/img/iconDM.svg" alt="dm" width={24} height={24} />
           </div>
-          <div
-            className="compas-icon mr-6 cursor-pointer inline-flex"
-            onClick={alertNotImplemented}
-          >
-            <Image
-              src="/assets/img/iconCompas.svg"
-              alt="compas"
-              width={24}
-              height={24}
-            />
+          <div className="compas-icon mr-6 cursor-pointer inline-flex" onClick={alertNotImplemented}>
+            <Image src="/assets/img/iconCompas.svg" alt="compas" width={24} height={24} />
           </div>
-          <div
-            className="like-icon mr-6 cursor-pointer inline-flex"
-            onClick={alertNotImplemented}
-          >
-            <Image
-              src="/assets/img/iconLike.svg"
-              alt="like"
-              width={24}
-              height={24}
-            />
+          <div className="like-icon mr-6 cursor-pointer inline-flex" onClick={alertNotImplemented}>
+            <Image src="/assets/img/iconLike.svg" alt="like" width={24} height={24} />
           </div>
-          {currentUser ? (
+          {user ? (
             <div className="hover-trigger relative flex items-center">
               <div className="profile-icon h-6 w-6 border rounded-full overflow-hidden cursor-pointer inline-flex">
                 <Image
@@ -105,6 +83,11 @@ export const Header: NextPage = () => {
                   <li className=" hover:bg-gray-200">
                     <Link href="/post">
                       <a className="px-6 py-3 block">投稿する</a>
+                    </Link>
+                  </li>
+                  <li className=" hover:bg-gray-200">
+                    <Link href="/accounts/edit">
+                      <a className="px-6 py-3 block">登録情報変更</a>
                     </Link>
                   </li>
                   <li className=" hover:bg-gray-200">

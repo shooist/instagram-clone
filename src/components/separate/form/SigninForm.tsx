@@ -2,10 +2,9 @@ import { FC } from "react";
 import { useContext } from "react";
 import { useForm } from "react-hook-form";
 import { Input } from "src/components/shared/form-items/Input";
-import { AuthContext } from "src/contexts/AuthContext";
 
 export const SigninForm: FC = (props) => {
-  const { signin } = useContext(AuthContext);
+  // const { signin } = useContext(AuthContext);
   const { register, handleSubmit, formState, setError } = useForm({
     reValidateMode: "onSubmit",
     defaultValues: {
@@ -16,7 +15,7 @@ export const SigninForm: FC = (props) => {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      await signin(data.email, data.password);
+      // await signin(data.email, data.password);
     } catch (error) {
       setError("email", {
         type: "manual",

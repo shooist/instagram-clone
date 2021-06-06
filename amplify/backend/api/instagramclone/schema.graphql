@@ -1,0 +1,22 @@
+type Article
+  @model
+  @key(name: "byCreatedAt", fields: ["type", "createdAt"], queryField: "listArticlesByCreatedAt")
+  @auth(rules: [{ allow: public, provider: iam }]) {
+  id: ID!
+  userId: ID!
+  author: String
+  caption: String
+  imageUrl: String
+  type: String!
+  user: User @connection(fields: ["userId"])
+  createdAt: String!
+}
+
+type User @model @auth(rules: [{ allow: public, provider: iam }]) {
+  id: ID!
+  name: String
+}
+
+type Hoge @model {
+  id: ID!
+}
